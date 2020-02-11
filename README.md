@@ -1,7 +1,3 @@
-# 
-This repository is just to access pinterest api and create dashboards in a specific account using tokens.
-
-
 <h2>Postman-pinterestExamples</h2>
 <h2>Description</h2>
 <p align="justified">This repository is just to access pinterest api and create dashboards by requests in a specific account using tokens.</br>
