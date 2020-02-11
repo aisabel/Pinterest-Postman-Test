@@ -1,0 +1,803 @@
+{
+	"info": {
+		"_postman_id": "4dc68211-b81d-40d4-9dfb-e4b6fb0270d0",
+		"name": "Pinterest collection of tests",
+		"description": "This collection contains the calls for api request in Pinterest app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Authorization code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "726aea23-1a82-4adb-9ce8-cdefb096b336",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseURL}}/oauth/?response_type=code&client_id=5079793241690252804&scope=read_public,write_public&state=768uyFys&redirect_uri=https://mywebsite.com/connect/pinterest/",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"oauth",
+						""
+					],
+					"query": [
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "client_id",
+							"value": "5079793241690252804"
+						},
+						{
+							"key": "scope",
+							"value": "read_public,write_public"
+						},
+						{
+							"key": "state",
+							"value": "768uyFys"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://mywebsite.com/connect/pinterest/"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set up Access Token",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/oauth/token?grant_type=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&client_id=5079793241690252804&client_secret=bc2e685bf880ce5cb4369aa2069b67c29e916f2f1e28610c2e2d54ac1cf1b654&code",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "client_id",
+							"value": "5079793241690252804"
+						},
+						{
+							"key": "client_secret",
+							"value": "bc2e685bf880ce5cb4369aa2069b67c29e916f2f1e28610c2e2d54ac1cf1b654"
+						},
+						{
+							"key": "code",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pinterest user session information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"if (response.data !== null) {",
+							"    tests[\"User name = Ana Isabel\"] = response.data.first_name === \"Ana Isabel\";",
+							"    tests[\"User lastname = Rodriguez\"] = response.data.last_name === \"Rodriguez\";",
+							"}",
+							"else {",
+							"\tconsole.log(\"Message was not found\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/me/?access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&fields=first_name%2Cid%2Clast_name%2Curl",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"me",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "fields",
+							"value": "first_name%2Cid%2Clast_name%2Curl"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find existing follower: Andrea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"if (response.data !== null) {",
+							"\tfor (var i = 0; i < response.data.length; i++) {",
+							"\t    \tif (response.data[i].first_name.includes(\"Andrea\") === true) {",
+							"                tests[\"User name = Andrea\"] = response.data[i].first_name === \"Andrea\";",
+							"                tests[\"User lastname = Duran Sempertegui\"] = response.data[i].last_name === \"Duran Sempertegui\";",
+							"            }",
+							"\t}",
+							"}",
+							"else {",
+							"\tconsole.log(\"Follower not found\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/me/followers/?access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&fields=first_name%2Cid%2Clast_name%2Curl",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"me",
+						"followers",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "fields",
+							"value": "first_name%2Cid%2Clast_name%2Curl"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new board: travel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 201 = created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"var boardUrl = pm.globals.get(response.data.url);",
+							"var boardName = pm.globals.get(response.data.name);",
+							"",
+							"if (response.data !== null) {",
+							"\tif (response.data.name.includes(\"Travel\") === true) {",
+							"",
+							"            tests[\"Board name = Travel\"] = response.data.name === \"Travel\";",
+							"            tests[\"Board url including board name = \"+boardUrl] =response.data.url.includes(\"travel\");",
+							"            ",
+							"        /*Setting up the information so that it can be used in further requests*/",
+							"            pm.globals.set(\"boardName\", response.data.name);",
+							"            pm.globals.set(\"boardID\", response.data.id);",
+							"            pm.globals.set(\"boardUrl\", response.data.url);",
+							"            pm.globals.set(\"boardDescription\", response.data.description);",
+							"            pm.globals.set(\"boardCreationTime\", response.data.created_at);",
+							"            messagefound = true;",
+							"        }",
+							"\t    ",
+							"}",
+							"else {",
+							"\tconsole.log(\"Board not found\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							"",
+							"/*Additional info:",
+							"HTTP.POST can be used when the client is sending data to the server and the server will decide the URI for the newly created resource. The POST method is used to request that the origin server accept the entity enclosed in the request as a new subordinate of the resource identified by the Request-URI in the Request-Line.",
+							"*/",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Travel",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this dashboard is for travel inspiration",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/boards/?access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&fields=id%2Cname%2Curl%2Ccreated_at",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "fields",
+							"value": "id%2Cname%2Curl%2Ccreated_at"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve information about created board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"var boardName = pm.globals.get(\"boardName\");",
+							"var boardID = pm.globals.get(\"boardID\");",
+							"var boardUrl = pm.globals.get(\"boardUrl\");",
+							"var boardDescription = pm.globals.get(\"boardDescription\");",
+							"var boardCreationTime = pm.globals.get(\"boardCreationTime\");",
+							"var pinsNumber = pm.globals.get(response.data.counts.pins);",
+							"",
+							"if (response.data !== null) {",
+							"\tif (response.data.name.includes(\"Travel\") === true) {",
+							"\t        tests[\"Board name = \"+boardName] = response.data.name === boardName;",
+							"            tests[\"Board id = \"+boardID] = response.data.id === boardID;",
+							"            tests[\"Board url = \"+boardUrl] =response.data.url === boardUrl;",
+							"            tests[\"Board description = this dashboard is for travel inspiration\"] = response.data.description === boardDescription;",
+							"            tests[\"Board date of creation = \"+boardCreationTime] = response.data.created_at === boardCreationTime;",
+							"            //tests[\"Number of pins = \"+pinsNumber] = response.data.counts.pins == pinsNumber;",
+							"            ",
+							"            messagefound = true;",
+							"        }",
+							"\t    ",
+							"}",
+							"else {",
+							"\tconsole.log(\"Board not found\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							"",
+							"/*Additional info",
+							"",
+							"GET is the simplest type of HTTP request method; the one that browsers use each time you click a link or type a URL into the address bar. It instructs the server to transmit the data identified by the URL to the client. Data should never be modified on the server side as a result of a GET request. In this sense, a GET request is read-only.",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/boards/isabely51/travel/?name=Travel&access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&fields=id%2Cname%2Curl%2Cdescription%2Ccreated_at%2Ccounts%2Creason%2Cprivacy",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"boards",
+						"isabely51",
+						"travel",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Travel"
+						},
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "fields",
+							"value": "id%2Cname%2Curl%2Cdescription%2Ccreated_at%2Ccounts%2Creason%2Cprivacy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit name and description board: travel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200 = ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"var boardName = pm.globals.get(\"boardName\");\t    ",
+							"var boardNewName = pm.globals.get(response.data.name);",
+							"",
+							"if (response.data !== null) {",
+							"\tif (response.data.name.includes(\"Travel\") === true) {",
+							"            tests[\"Board new name is different than \"+boardName] = response.data.name !== boardName;",
+							"            pm.globals.set(\"boardNewName\", response.data.name);",
+							"            messagefound = true;",
+							"        }",
+							"\t    ",
+							"}",
+							"else {",
+							"\tconsole.log(\"Not possible to edit board\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							"",
+							"/*Additional info",
+							"Submits a partial modification to a resource. If you only need to update one field for the resource, you may want to use the PATCH method.",
+							"",
+							"HTTP.PATCH can be used when the client is sending one or more changes to be applied by the server. The PATCH method requests that a set of changes described in the request entity be applied to the resource identified by the Request-URI. The set of changes is represented in a format called a patch document.",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Travel2",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this dashboard is for travel inspiration",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/boards/isabely51/travel/?access_token=&fields=id%2Cname%2Curl%2Cdescription%2Ccreated_at%2Ccounts%2Cprivacy",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"boards",
+						"isabely51",
+						"travel",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": ""
+						},
+						{
+							"key": "fields",
+							"value": "id%2Cname%2Curl%2Cdescription%2Ccreated_at%2Ccounts%2Cprivacy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create pin in dashboard travel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200 = created\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"if (response.data !== null) {",
+							"\tif (response.data.name.includes(\"heaven\") === true) {",
+							"            tests[\"Heaven Pin exists\"] = response.data.name === includes(\"heaven\");",
+							"            messagefound = true;",
+							"        }",
+							"}",
+							"else {",
+							"\tconsole.log(\"Board not found\");",
+							"\ttests[\"Message was not found\"] = false;",
+							"}",
+							"",
+							"/*Additional info:",
+							"HTTP.POST can be used when the client is sending data to the server and the server will decide the URI for the newly created resource. The POST method is used to request that the origin server accept the entity enclosed in the request as a new subordinate of the resource identified by the Request-URI in the Request-Line.",
+							"*/",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "board",
+							"value": "{{boardNewName}}",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "heavensGate",
+							"type": "text"
+						},
+						{
+							"key": "link",
+							"value": "https://media.tacdn.com/media/attractions-splice-spp-674x446/07/1e/b9/f3.jpg",
+							"type": "text"
+						},
+						{
+							"key": "image_url",
+							"value": "https://media.tacdn.com/media/attractions-splice-spp-674x446/07/1e/b9/f3.jpg",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/pins/?access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA&fields=id%2Clink%2Cnote%2Curl",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"pins",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						},
+						{
+							"key": "fields",
+							"value": "id%2Clink%2Cnote%2Curl"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete board: travel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11a99d48-b051-4946-bc1e-a8d97f29cdc5",
+						"exec": [
+							"pm.test(\"Status code is 200 = status ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"if (response.data !== null) {",
+							"\tif (response.data.name.includes(\"Travel\") === true) {",
+							"            messagefound = true;",
+							"            \tconsole.log(\"Board not deleted\");",
+							"\t            tests[\"Board was not deleted\"] = false;",
+							"        }",
+							"\t    ",
+							"}",
+							"else {",
+							"\tconsole.log(\"Board deleted\");",
+							"\ttests[\"Board was deleted\"] = true;",
+							"}",
+							"",
+							"/*Additional info:",
+							"HTTP.POST can be used when the client is sending data to the server and the server will decide the URI for the newly created resource. The POST method is used to request that the origin server accept the entity enclosed in the request as a new subordinate of the resource identified by the Request-URI in the Request-Line.",
+							"*/",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Travel",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this dashboard is for travel inspiration",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/boards/isabely51/travel2/?access_token=AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"boards",
+						"isabely51",
+						"travel2",
+						""
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "AmTYpai0PytBYzoeDOHIEDN-9N6FFe4NFOnpW45Gfw0KF2CmBAiyADAAAAWyRn8QfLSgqD8AAAAA"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
